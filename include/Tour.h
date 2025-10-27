@@ -7,46 +7,29 @@
 
 class Tour {
 private:
-    std::vector<City> cities;
+    std::vector<City> tour;
     double totalDistance;
-    
-    // Calculate the total distance of the tour
-    void calculateTotalDistance();
+
+    // Helper to calculate total distance (Private method)
+    void calculateDistance();
 
 public:
-    // Constructors
-    Tour();
-    Tour(std::vector<City> cities);
-    
-    // Add a city to the tour
-    void addCity(const City& city);
-    
-    // Get city at index
-    City getCity(int index) const;
-    
-    // Get number of cities
-    int getSize() const;
-    
-    // Get all cities
-    std::vector<City> getCities() const;
-    
-    // Get total distance
-    double getTotalDistance();
-    
-    // Generate a random tour
+    // Constructor
+    Tour(const std::vector<City>& initialCities);
+
+    // Getters (Declarations)
+    const std::vector<City>& getTour() const;
+    double getTotalDistance() const;
+
+    // Path modification methods (Declarations)
     void generateRandomTour();
-    
-    // Swap two cities in the tour (for neighbor generation)
-    void swapCities(int index1, int index2);
-    
-    // Create a copy of this tour
-    Tour clone() const;
-    
-    // Display the tour
+    void swapCities(int i, int j);
+    Tour createCopy() const;
+
+    // Display method (Declaration)
     void display() const;
     
-    // Clear the tour
-    void clear();
+    Tour();
 };
 
 #endif // TOUR_H

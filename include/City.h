@@ -3,6 +3,7 @@
 
 #include <string>
 #include <cmath>
+#include <iostream>
 
 class City {
 private:
@@ -11,25 +12,22 @@ private:
     double y;
 
 public:
-    // Constructors
-    City();
-    City(std::string name, double x, double y);
-    
-    // Getters
-    std::string getName() const;
+    // DECLARATION only (Implementation moved to City.cpp)
+    City(std::string name, double x, double y); 
+
+    // DECLARATIONS only
+    std::string getName() const; 
     double getX() const;
     double getY() const;
-    
-    // Setters
-    void setName(std::string name);
-    void setX(double x);
-    void setY(double y);
-    
-    // Calculate Euclidean distance to another city
+
+    // DECLARATION only
     double distanceTo(const City& other) const;
-    
-    // Display city information
+
+    // DECLARATION only
     void display() const;
+    
+    // (Optional) Remove the default constructor you tried to define in City.cpp,
+    // as it's not needed if every city is initialized with coordinates.
 };
 
 #endif // CITY_H

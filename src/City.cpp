@@ -1,15 +1,11 @@
-#include "../include/City.h"
+#include "City.h"
+#include <cmath>
 #include <iostream>
-#include <iomanip>
 
-// Default constructor
-City::City() : name(""), x(0.0), y(0.0) {}
+// Constructor Definition
+City::City(std::string name, double x, double y) : name(name), x(x), y(y) {}
 
-// Parameterized constructor
-City::City(std::string name, double x, double y) 
-    : name(name), x(x), y(y) {}
-
-// Getters
+// Getter Definitions
 std::string City::getName() const {
     return name;
 }
@@ -22,29 +18,15 @@ double City::getY() const {
     return y;
 }
 
-// Setters
-void City::setName(std::string name) {
-    this->name = name;
-}
-
-void City::setX(double x) {
-    this->x = x;
-}
-
-void City::setY(double y) {
-    this->y = y;
-}
-
-// Calculate Euclidean distance between two cities
+// Distance Calculation Definition
 double City::distanceTo(const City& other) const {
-    double dx = x - other.x;
-    double dy = y - other.y;
+    double dx = other.x - x;
+    double dy = other.y - y;
     return std::sqrt(dx * dx + dy * dy);
 }
 
-// Display city information
+// Display Method Definition
 void City::display() const {
-    std::cout << std::fixed << std::setprecision(2);
-    std::cout << "City: " << name 
-              << " (x: " << x << ", y: " << y << ")" << std::endl;
+    std::cout << "City: " << name << " (" << x << ", " << y << ")" << std::endl;
 }
+

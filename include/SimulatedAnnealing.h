@@ -1,57 +1,36 @@
-#ifndef SIMULATED_ANNEALING_H
-#define SIMULATED_ANNEALING_H
+#ifndef SIMULATEDANNEALING_H
+#define SIMULATEDANNEALING_H
 
 #include "Tour.h"
-#include <vector>
-#include <functional>
+#include <random>
+#include <chrono>
 
 class SimulatedAnnealing {
 private:
-    double initialTemperature;
+    double initialTemp;
     double coolingRate;
-    int iterationsPerTemp;
+    int iterationsPerTemp; 
+
+    double currentTemp;
+    long totalIterations;
     
-    Tour currentTour;
-    Tour bestTour;
-    
-    double currentTemperature;
-    int totalIterations;
-    
-    // Callback function for visualization updates (optional)
-    std::function<void(Tour, double, int)> updateCallback;
-    
-    // Calculate acceptance probability
-    double acceptanceProbability(double currentEnergy, double newEnergy, double temperature);
-    
-    // Generate a neighbor solution
-    Tour generateNeighbor(const Tour& tour);
+    std::mt19937 generator;
+
+    double acceptanceProbability(double deltaEnergy, double temperature) const;
 
 public:
-    // Constructor
-    SimulatedAnnealing(double initialTemp = 10000.0, 
-                      double coolingRate = 0.995, 
-                      int iterationsPerTemp = 100);
-    
-    // Set parameters
-    void setInitialTemperature(double temp);
-    void setCoolingRate(double rate);
-    void setIterationsPerTemp(int iterations);
-    
-    // Set callback for updates
-    void setUpdateCallback(std::function<void(Tour, double, int)> callback);
-    
-    // Solve TSP
-    Tour solve(std::vector<City> cities);
-    
-    // Get best tour found
-    Tour getBestTour() const;
-    
-    // Get current statistics
-    double getCurrentTemperature() const;
-    int getTotalIterations() const;
-    
-    // Display algorithm parameters
-    void displayParameters() const;
+    SimulatedAnnealing(double temp, double rate, int iter);
+
+    // --- Methods for Stepwise Execution (The core refactoring) ---
+    bool runOneIteration(Tour& currentTour); 
+    void coolTemperature();
+    void reset(double initialTemp, double coolingRate, int iter);
+
+    // --- Getters fully defined in header (FIX: Removed from .cpp) ---
+    long getTotalIterations() const { return totalIterations; }
+    double getCurrentTemperature() const { return currentTemp; }
+
+    void displayParameters() const; 
 };
 
-#endif // SIMULATED_ANNEALING_H
+#endif // SIMULATEDANNEALING_H

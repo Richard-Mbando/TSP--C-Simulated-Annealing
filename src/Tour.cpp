@@ -1,110 +1,81 @@
-#include "../include/Tour.h"
+#include "Tour.h"
 #include <iostream>
 #include <random>
-#include <iomanip>
+#include <chrono>
 
-// Default constructor
-Tour::Tour() : totalDistance(0.0) {}
-
-// Parameterized constructor
-Tour::Tour(std::vector<City> cities) : cities(cities), totalDistance(0.0) {
-    calculateTotalDistance();
+// NEW: Default Constructor Definition
+// This allows the Tour members in SolverWindow to be initialized before cityData is ready.
+Tour::Tour() : totalDistance(0.0) {
+    // tour vector is initialized as empty.
 }
 
-// Add a city to the tour
-void Tour::addCity(const City& city) {
-    cities.push_back(city);
-    calculateTotalDistance();
-}
-
-// Get city at index
-City Tour::getCity(int index) const {
-    if (index >= 0 && index < cities.size()) {
-        return cities[index];
+// Constructor Definition (Existing)
+Tour::Tour(const std::vector<City>& initialCities) : tour(initialCities), totalDistance(0.0) {
+    // Only calculate distance if there are cities.
+    if (!tour.empty()) {
+        calculateDistance();
     }
-    return City(); // Return empty city if index out of bounds
 }
 
-// Get number of cities
-int Tour::getSize() const {
-    return cities.size();
-}
-
-// Get all cities
-std::vector<City> Tour::getCities() const {
-    return cities;
-}
-
-// Calculate total distance of the tour
-void Tour::calculateTotalDistance() {
-    totalDistance = 0.0;
-    
-    if (cities.size() < 2) {
+// Distance Calculation Definition: Sums distances between adjacent cities, plus the return to start.
+void Tour::calculateDistance() {
+    // If the tour is empty or has only one city, the distance is 0.
+    if (tour.size() < 2) {
+        totalDistance = 0.0;
         return;
     }
     
-    // Calculate distance between consecutive cities
-    for (size_t i = 0; i < cities.size() - 1; i++) {
-        totalDistance += cities[i].distanceTo(cities[i + 1]);
-    }
-    
-    // Add distance from last city back to first city (complete the tour)
-    totalDistance += cities[cities.size() - 1].distanceTo(cities[0]);
-}
-
-// Get total distance
-double Tour::getTotalDistance() {
-    calculateTotalDistance();
-    return totalDistance;
-}
-
-// Generate a random tour by shuffling cities
-void Tour::generateRandomTour() {
-    if (cities.empty()) return;
-    
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::shuffle(cities.begin(), cities.end(), gen);
-    
-    calculateTotalDistance();
-}
-
-// Swap two cities in the tour
-void Tour::swapCities(int index1, int index2) {
-    if (index1 >= 0 && index1 < cities.size() && 
-        index2 >= 0 && index2 < cities.size()) {
-        std::swap(cities[index1], cities[index2]);
-        calculateTotalDistance();
-    }
-}
-
-// Create a copy of this tour
-Tour Tour::clone() const {
-    return Tour(cities);
-}
-
-// Display the tour
-void Tour::display() const {
-    std::cout << "\n=== Tour Information ===" << std::endl;
-    std::cout << "Number of cities: " << cities.size() << std::endl;
-    std::cout << "Total distance: " << std::fixed << std::setprecision(2) 
-              << totalDistance << std::endl;
-    std::cout << "\nRoute:" << std::endl;
-    
-    for (size_t i = 0; i < cities.size(); i++) {
-        std::cout << (i + 1) << ". " << cities[i].getName() << std::endl;
-    }
-    
-    if (!cities.empty()) {
-        std::cout << (cities.size() + 1) << ". " << cities[0].getName() 
-                  << " (return to start)" << std::endl;
-    }
-    
-    std::cout << "========================\n" << std::endl;
-}
-
-// Clear the tour
-void Tour::clear() {
-    cities.clear();
     totalDistance = 0.0;
+    for (size_t i = 0; i < tour.size(); ++i) {
+        // (i + 1) % tour.size() handles the wrap-around back to the first city
+        const City& nextCity = tour[(i + 1) % tour.size()];
+        totalDistance += tour[i].distanceTo(nextCity);
+    }
+}
+
+// Generates a random initial tour using std::shuffle.
+void Tour::generateRandomTour() {
+    if (tour.size() < 2) return;
+    
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::shuffle(tour.begin(), tour.end(), std::default_random_engine(seed));
+    calculateDistance();
+}
+
+// Swaps two cities (the basic move for Simulated Annealing).
+void Tour::swapCities(int i, int j) {
+    // Sanity check
+    if (i >= 0 && i < tour.size() && j >= 0 && j < tour.size()) {
+        std::swap(tour[i], tour[j]);
+        calculateDistance();
+    }
+}
+
+// Creates a deep copy of the tour.
+Tour Tour::createCopy() const {
+    // Use the parameterized constructor to create the copy
+    Tour copy(tour);
+    // Explicitly copy the totalDistance (though the constructor will recalculate it)
+    copy.totalDistance = totalDistance; 
+    return copy;
+}
+
+// Getters Definition
+const std::vector<City>& Tour::getTour() const { return tour; }
+double Tour::getTotalDistance() const { return totalDistance; }
+
+// Display Method Definition
+void Tour::display() const {
+    if (tour.empty()) {
+        std::cout << "Tour Path: Empty" << std::endl;
+        std::cout << "Total Distance: 0.0" << std::endl;
+        return;
+    }
+    
+    std::cout << "Tour Path: ";
+    for (const auto& city : tour) {
+        std::cout << city.getName() << " -> ";
+    }
+    std::cout << tour[0].getName() << " (Start/End)" << std::endl;
+    std::cout << "Total Distance: " << totalDistance << std::endl;
 }
