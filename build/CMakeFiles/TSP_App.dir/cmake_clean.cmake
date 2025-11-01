@@ -9,9 +9,9 @@ file(REMOVE_RECURSE
   "CMakeFiles/TSP_App.dir/src/Tour.cpp.obj.d"
   "CMakeFiles/TSP_App.dir/src/main.cpp.obj"
   "CMakeFiles/TSP_App.dir/src/main.cpp.obj.d"
-  "TSP_App.exe"
-  "TSP_App.exe.manifest"
-  "TSP_App.pdb"
+  "bin/TSP_App.exe"
+  "bin/TSP_App.exe.manifest"
+  "bin/TSP_App.pdb"
   "libTSP_App.dll.a"
 )
 

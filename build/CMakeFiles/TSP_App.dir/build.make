@@ -52,10 +52,10 @@ RM = C:\msys64\mingw64\bin\cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp"
+CMAKE_SOURCE_DIR = "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\build"
+CMAKE_BINARY_DIR = "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\build"
 
 # Include any dependencies generated for this target.
 include CMakeFiles/TSP_App.dir/depend.make
@@ -73,78 +73,78 @@ CMakeFiles/TSP_App.dir/codegen:
 
 CMakeFiles/TSP_App.dir/src/main.cpp.obj: CMakeFiles/TSP_App.dir/flags.make
 CMakeFiles/TSP_App.dir/src/main.cpp.obj: CMakeFiles/TSP_App.dir/includes_CXX.rsp
-CMakeFiles/TSP_App.dir/src/main.cpp.obj: C:/Users/HP/OneDrive/Documentos/TSP\ C++/tsp-solver-cpp/src/main.cpp
+CMakeFiles/TSP_App.dir/src/main.cpp.obj: C:/Users/HP/Downloads/TSP\ C++/tsp-solver-cpp/src/main.cpp
 CMakeFiles/TSP_App.dir/src/main.cpp.obj: CMakeFiles/TSP_App.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/TSP_App.dir/src/main.cpp.obj"
-	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TSP_App.dir/src/main.cpp.obj -MF CMakeFiles\TSP_App.dir\src\main.cpp.obj.d -o CMakeFiles\TSP_App.dir\src\main.cpp.obj -c "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\src\main.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/TSP_App.dir/src/main.cpp.obj"
+	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TSP_App.dir/src/main.cpp.obj -MF CMakeFiles\TSP_App.dir\src\main.cpp.obj.d -o CMakeFiles\TSP_App.dir\src\main.cpp.obj -c "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\src\main.cpp"
 
 CMakeFiles/TSP_App.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/TSP_App.dir/src/main.cpp.i"
-	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\src\main.cpp" > CMakeFiles\TSP_App.dir\src\main.cpp.i
+	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\src\main.cpp" > CMakeFiles\TSP_App.dir\src\main.cpp.i
 
 CMakeFiles/TSP_App.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TSP_App.dir/src/main.cpp.s"
-	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\src\main.cpp" -o CMakeFiles\TSP_App.dir\src\main.cpp.s
+	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\src\main.cpp" -o CMakeFiles\TSP_App.dir\src\main.cpp.s
 
 CMakeFiles/TSP_App.dir/src/City.cpp.obj: CMakeFiles/TSP_App.dir/flags.make
 CMakeFiles/TSP_App.dir/src/City.cpp.obj: CMakeFiles/TSP_App.dir/includes_CXX.rsp
-CMakeFiles/TSP_App.dir/src/City.cpp.obj: C:/Users/HP/OneDrive/Documentos/TSP\ C++/tsp-solver-cpp/src/City.cpp
+CMakeFiles/TSP_App.dir/src/City.cpp.obj: C:/Users/HP/Downloads/TSP\ C++/tsp-solver-cpp/src/City.cpp
 CMakeFiles/TSP_App.dir/src/City.cpp.obj: CMakeFiles/TSP_App.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/TSP_App.dir/src/City.cpp.obj"
-	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TSP_App.dir/src/City.cpp.obj -MF CMakeFiles\TSP_App.dir\src\City.cpp.obj.d -o CMakeFiles\TSP_App.dir\src\City.cpp.obj -c "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\src\City.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/TSP_App.dir/src/City.cpp.obj"
+	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TSP_App.dir/src/City.cpp.obj -MF CMakeFiles\TSP_App.dir\src\City.cpp.obj.d -o CMakeFiles\TSP_App.dir\src\City.cpp.obj -c "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\src\City.cpp"
 
 CMakeFiles/TSP_App.dir/src/City.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/TSP_App.dir/src/City.cpp.i"
-	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\src\City.cpp" > CMakeFiles\TSP_App.dir\src\City.cpp.i
+	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\src\City.cpp" > CMakeFiles\TSP_App.dir\src\City.cpp.i
 
 CMakeFiles/TSP_App.dir/src/City.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TSP_App.dir/src/City.cpp.s"
-	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\src\City.cpp" -o CMakeFiles\TSP_App.dir\src\City.cpp.s
+	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\src\City.cpp" -o CMakeFiles\TSP_App.dir\src\City.cpp.s
 
 CMakeFiles/TSP_App.dir/src/Tour.cpp.obj: CMakeFiles/TSP_App.dir/flags.make
 CMakeFiles/TSP_App.dir/src/Tour.cpp.obj: CMakeFiles/TSP_App.dir/includes_CXX.rsp
-CMakeFiles/TSP_App.dir/src/Tour.cpp.obj: C:/Users/HP/OneDrive/Documentos/TSP\ C++/tsp-solver-cpp/src/Tour.cpp
+CMakeFiles/TSP_App.dir/src/Tour.cpp.obj: C:/Users/HP/Downloads/TSP\ C++/tsp-solver-cpp/src/Tour.cpp
 CMakeFiles/TSP_App.dir/src/Tour.cpp.obj: CMakeFiles/TSP_App.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/TSP_App.dir/src/Tour.cpp.obj"
-	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TSP_App.dir/src/Tour.cpp.obj -MF CMakeFiles\TSP_App.dir\src\Tour.cpp.obj.d -o CMakeFiles\TSP_App.dir\src\Tour.cpp.obj -c "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\src\Tour.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/TSP_App.dir/src/Tour.cpp.obj"
+	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TSP_App.dir/src/Tour.cpp.obj -MF CMakeFiles\TSP_App.dir\src\Tour.cpp.obj.d -o CMakeFiles\TSP_App.dir\src\Tour.cpp.obj -c "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\src\Tour.cpp"
 
 CMakeFiles/TSP_App.dir/src/Tour.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/TSP_App.dir/src/Tour.cpp.i"
-	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\src\Tour.cpp" > CMakeFiles\TSP_App.dir\src\Tour.cpp.i
+	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\src\Tour.cpp" > CMakeFiles\TSP_App.dir\src\Tour.cpp.i
 
 CMakeFiles/TSP_App.dir/src/Tour.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TSP_App.dir/src/Tour.cpp.s"
-	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\src\Tour.cpp" -o CMakeFiles\TSP_App.dir\src\Tour.cpp.s
+	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\src\Tour.cpp" -o CMakeFiles\TSP_App.dir\src\Tour.cpp.s
 
 CMakeFiles/TSP_App.dir/src/SimulatedAnnealing.cpp.obj: CMakeFiles/TSP_App.dir/flags.make
 CMakeFiles/TSP_App.dir/src/SimulatedAnnealing.cpp.obj: CMakeFiles/TSP_App.dir/includes_CXX.rsp
-CMakeFiles/TSP_App.dir/src/SimulatedAnnealing.cpp.obj: C:/Users/HP/OneDrive/Documentos/TSP\ C++/tsp-solver-cpp/src/SimulatedAnnealing.cpp
+CMakeFiles/TSP_App.dir/src/SimulatedAnnealing.cpp.obj: C:/Users/HP/Downloads/TSP\ C++/tsp-solver-cpp/src/SimulatedAnnealing.cpp
 CMakeFiles/TSP_App.dir/src/SimulatedAnnealing.cpp.obj: CMakeFiles/TSP_App.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/TSP_App.dir/src/SimulatedAnnealing.cpp.obj"
-	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TSP_App.dir/src/SimulatedAnnealing.cpp.obj -MF CMakeFiles\TSP_App.dir\src\SimulatedAnnealing.cpp.obj.d -o CMakeFiles\TSP_App.dir\src\SimulatedAnnealing.cpp.obj -c "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\src\SimulatedAnnealing.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/TSP_App.dir/src/SimulatedAnnealing.cpp.obj"
+	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TSP_App.dir/src/SimulatedAnnealing.cpp.obj -MF CMakeFiles\TSP_App.dir\src\SimulatedAnnealing.cpp.obj.d -o CMakeFiles\TSP_App.dir\src\SimulatedAnnealing.cpp.obj -c "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\src\SimulatedAnnealing.cpp"
 
 CMakeFiles/TSP_App.dir/src/SimulatedAnnealing.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/TSP_App.dir/src/SimulatedAnnealing.cpp.i"
-	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\src\SimulatedAnnealing.cpp" > CMakeFiles\TSP_App.dir\src\SimulatedAnnealing.cpp.i
+	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\src\SimulatedAnnealing.cpp" > CMakeFiles\TSP_App.dir\src\SimulatedAnnealing.cpp.i
 
 CMakeFiles/TSP_App.dir/src/SimulatedAnnealing.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TSP_App.dir/src/SimulatedAnnealing.cpp.s"
-	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\src\SimulatedAnnealing.cpp" -o CMakeFiles\TSP_App.dir\src\SimulatedAnnealing.cpp.s
+	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\src\SimulatedAnnealing.cpp" -o CMakeFiles\TSP_App.dir\src\SimulatedAnnealing.cpp.s
 
 CMakeFiles/TSP_App.dir/src/SolverWindow.cpp.obj: CMakeFiles/TSP_App.dir/flags.make
 CMakeFiles/TSP_App.dir/src/SolverWindow.cpp.obj: CMakeFiles/TSP_App.dir/includes_CXX.rsp
-CMakeFiles/TSP_App.dir/src/SolverWindow.cpp.obj: C:/Users/HP/OneDrive/Documentos/TSP\ C++/tsp-solver-cpp/src/SolverWindow.cpp
+CMakeFiles/TSP_App.dir/src/SolverWindow.cpp.obj: C:/Users/HP/Downloads/TSP\ C++/tsp-solver-cpp/src/SolverWindow.cpp
 CMakeFiles/TSP_App.dir/src/SolverWindow.cpp.obj: CMakeFiles/TSP_App.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/TSP_App.dir/src/SolverWindow.cpp.obj"
-	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TSP_App.dir/src/SolverWindow.cpp.obj -MF CMakeFiles\TSP_App.dir\src\SolverWindow.cpp.obj.d -o CMakeFiles\TSP_App.dir\src\SolverWindow.cpp.obj -c "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\src\SolverWindow.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/TSP_App.dir/src/SolverWindow.cpp.obj"
+	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TSP_App.dir/src/SolverWindow.cpp.obj -MF CMakeFiles\TSP_App.dir\src\SolverWindow.cpp.obj.d -o CMakeFiles\TSP_App.dir\src\SolverWindow.cpp.obj -c "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\src\SolverWindow.cpp"
 
 CMakeFiles/TSP_App.dir/src/SolverWindow.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/TSP_App.dir/src/SolverWindow.cpp.i"
-	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\src\SolverWindow.cpp" > CMakeFiles\TSP_App.dir\src\SolverWindow.cpp.i
+	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\src\SolverWindow.cpp" > CMakeFiles\TSP_App.dir\src\SolverWindow.cpp.i
 
 CMakeFiles/TSP_App.dir/src/SolverWindow.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TSP_App.dir/src/SolverWindow.cpp.s"
-	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\src\SolverWindow.cpp" -o CMakeFiles\TSP_App.dir\src\SolverWindow.cpp.s
+	C:\msys64\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\src\SolverWindow.cpp" -o CMakeFiles\TSP_App.dir\src\SolverWindow.cpp.s
 
 # Object files for target TSP_App
 TSP_App_OBJECTS = \
@@ -157,23 +157,26 @@ TSP_App_OBJECTS = \
 # External object files for target TSP_App
 TSP_App_EXTERNAL_OBJECTS =
 
-TSP_App.exe: CMakeFiles/TSP_App.dir/src/main.cpp.obj
-TSP_App.exe: CMakeFiles/TSP_App.dir/src/City.cpp.obj
-TSP_App.exe: CMakeFiles/TSP_App.dir/src/Tour.cpp.obj
-TSP_App.exe: CMakeFiles/TSP_App.dir/src/SimulatedAnnealing.cpp.obj
-TSP_App.exe: CMakeFiles/TSP_App.dir/src/SolverWindow.cpp.obj
-TSP_App.exe: CMakeFiles/TSP_App.dir/build.make
-TSP_App.exe: C:/msys64/mingw64/lib/libsfml-graphics.dll.a
-TSP_App.exe: C:/msys64/mingw64/lib/libsfml-window.dll.a
-TSP_App.exe: C:/msys64/mingw64/lib/libsfml-system.dll.a
-TSP_App.exe: CMakeFiles/TSP_App.dir/linkLibs.rsp
-TSP_App.exe: CMakeFiles/TSP_App.dir/objects1.rsp
-TSP_App.exe: CMakeFiles/TSP_App.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable TSP_App.exe"
+bin/TSP_App.exe: CMakeFiles/TSP_App.dir/src/main.cpp.obj
+bin/TSP_App.exe: CMakeFiles/TSP_App.dir/src/City.cpp.obj
+bin/TSP_App.exe: CMakeFiles/TSP_App.dir/src/Tour.cpp.obj
+bin/TSP_App.exe: CMakeFiles/TSP_App.dir/src/SimulatedAnnealing.cpp.obj
+bin/TSP_App.exe: CMakeFiles/TSP_App.dir/src/SolverWindow.cpp.obj
+bin/TSP_App.exe: CMakeFiles/TSP_App.dir/build.make
+bin/TSP_App.exe: CMakeFiles/TSP_App.dir/linkLibs.rsp
+bin/TSP_App.exe: CMakeFiles/TSP_App.dir/objects1.rsp
+bin/TSP_App.exe: CMakeFiles/TSP_App.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable bin\TSP_App.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\TSP_App.dir\link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold "Copying sfml-system-2.dll"
+	C:\msys64\mingw64\bin\cmake.exe -E copy_if_different C:/msys64/mingw64/bin/sfml-system-2.dll "C:/Users/HP/Downloads/TSP C++/tsp-solver-cpp/build/bin"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold "Copying sfml-window-2.dll"
+	C:\msys64\mingw64\bin\cmake.exe -E copy_if_different C:/msys64/mingw64/bin/sfml-window-2.dll "C:/Users/HP/Downloads/TSP C++/tsp-solver-cpp/build/bin"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold "Copying sfml-graphics-2.dll"
+	C:\msys64\mingw64\bin\cmake.exe -E copy_if_different C:/msys64/mingw64/bin/sfml-graphics-2.dll "C:/Users/HP/Downloads/TSP C++/tsp-solver-cpp/build/bin"
 
 # Rule to build all files generated by this target.
-CMakeFiles/TSP_App.dir/build: TSP_App.exe
+CMakeFiles/TSP_App.dir/build: bin/TSP_App.exe
 .PHONY : CMakeFiles/TSP_App.dir/build
 
 CMakeFiles/TSP_App.dir/clean:
@@ -181,6 +184,6 @@ CMakeFiles/TSP_App.dir/clean:
 .PHONY : CMakeFiles/TSP_App.dir/clean
 
 CMakeFiles/TSP_App.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp" "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp" "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\build" "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\build" "C:\Users\HP\OneDrive\Documentos\TSP C++\tsp-solver-cpp\build\CMakeFiles\TSP_App.dir\DependInfo.cmake" "--color=$(COLOR)"
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp" "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp" "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\build" "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\build" "C:\Users\HP\Downloads\TSP C++\tsp-solver-cpp\build\CMakeFiles\TSP_App.dir\DependInfo.cmake" "--color=$(COLOR)"
 .PHONY : CMakeFiles/TSP_App.dir/depend
 

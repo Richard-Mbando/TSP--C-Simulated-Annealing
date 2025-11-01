@@ -7,16 +7,11 @@ set(CMAKE_DEPENDS_GENERATOR "MinGW Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "C:/Users/HP/OneDrive/Documentos/TSP C++/tsp-solver-cpp/CMakeLists.txt"
-  "CMakeFiles/4.1.0/CMakeCCompiler.cmake"
-  "CMakeFiles/4.1.0/CMakeCXXCompiler.cmake"
-  "CMakeFiles/4.1.0/CMakeRCCompiler.cmake"
-  "CMakeFiles/4.1.0/CMakeSystem.cmake"
-  "C:/msys64/mingw64/lib/cmake/SFML/SFMLConfig.cmake"
-  "C:/msys64/mingw64/lib/cmake/SFML/SFMLConfigDependencies.cmake"
-  "C:/msys64/mingw64/lib/cmake/SFML/SFMLConfigVersion.cmake"
-  "C:/msys64/mingw64/lib/cmake/SFML/SFMLSharedTargets-release.cmake"
-  "C:/msys64/mingw64/lib/cmake/SFML/SFMLSharedTargets.cmake"
+  "C:/Users/HP/Downloads/TSP C++/tsp-solver-cpp/CMakeLists.txt"
+  "CMakeFiles/4.1.2/CMakeCCompiler.cmake"
+  "CMakeFiles/4.1.2/CMakeCXXCompiler.cmake"
+  "CMakeFiles/4.1.2/CMakeRCCompiler.cmake"
+  "CMakeFiles/4.1.2/CMakeSystem.cmake"
   "C:/msys64/mingw64/share/cmake/Modules/CMakeCCompiler.cmake.in"
   "C:/msys64/mingw64/share/cmake/Modules/CMakeCCompilerABI.c"
   "C:/msys64/mingw64/share/cmake/Modules/CMakeCInformation.cmake"
@@ -144,14 +139,14 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
-  "CMakeFiles/4.1.0/CMakeSystem.cmake"
-  "CMakeFiles/4.1.0/CMakeCCompiler.cmake"
-  "CMakeFiles/4.1.0/CMakeCXXCompiler.cmake"
-  "CMakeFiles/4.1.0/CMakeRCCompiler.cmake"
-  "CMakeFiles/4.1.0/CMakeCCompiler.cmake"
-  "CMakeFiles/4.1.0/CMakeCCompiler.cmake"
-  "CMakeFiles/4.1.0/CMakeCXXCompiler.cmake"
-  "CMakeFiles/4.1.0/CMakeCXXCompiler.cmake"
+  "CMakeFiles/4.1.2/CMakeSystem.cmake"
+  "CMakeFiles/4.1.2/CMakeCCompiler.cmake"
+  "CMakeFiles/4.1.2/CMakeCXXCompiler.cmake"
+  "CMakeFiles/4.1.2/CMakeRCCompiler.cmake"
+  "CMakeFiles/4.1.2/CMakeCCompiler.cmake"
+  "CMakeFiles/4.1.2/CMakeCCompiler.cmake"
+  "CMakeFiles/4.1.2/CMakeCXXCompiler.cmake"
+  "CMakeFiles/4.1.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 

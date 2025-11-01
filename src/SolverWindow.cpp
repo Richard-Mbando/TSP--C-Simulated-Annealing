@@ -1,86 +1,309 @@
 #include "SolverWindow.h"
 #include <sstream>
+#include <iomanip>
+#include <cmath>
+#include <SFML/System/Angle.hpp> // Required for sf::degrees
+#include <SFML/System/Vector2.hpp> // Required for sf::Vector2u and sf::Vector2f
+
+// Initialize static constants
+const float SolverWindow::VISUAL_SCALE = 1.5f;
+const float SolverWindow::OFFSET_X = 40.0f;
+const float SolverWindow::OFFSET_Y = 40.0f;
 
 SolverWindow::SolverWindow() 
-    : window(sf::VideoMode(900, 600), "TSP Simulated Annealing Solver"),
-    // Initialize solver with basic parameters
-    solver(10000.0, 0.995, 100) 
+    // SFML 3.x FIX: sf::VideoMode now takes a single sf::Vector2u argument
+    : window(sf::VideoMode(sf::Vector2u(WINDOW_WIDTH, WINDOW_HEIGHT)), "TSP - Simulated Annealing Solver", sf::Style::Titlebar | sf::Style::Close),
+      solver(10000.0, 0.995, 100),
+      isRunning(false),
+      isPaused(false),
+      isAddingCity(false),
+      iterationCount(0),
+      // SFML 3.x FIX: Initialize all sf::Text members with the font object to satisfy the new constructor requirement.
+      startButtonText(font),
+      pauseButtonText(font),
+      resetButtonText(font),
+      addCityButtonText(font),
+      removeCityButtonText(font)
 {
-    window.setFramerateLimit(60); 
+    window.setFramerateLimit(60);
+    
+    // Load font - tries multiple locations
+    // SFML 3.x FIX: loadFromFile is replaced by openFromFile for sf::Font
+    if (!font.openFromFile("arial.ttf")) {
+        if (!font.openFromFile("C:/Windows/Fonts/arial.ttf")) {
+            if (!font.openFromFile("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf")) {
+                std::cerr << "Warning: Could not load font. Using default font rendering." << std::endl;
+            }
+        }
+    }
+    
+    setupButtons();
     initializeCities();
     resetSimulation();
-    
-    // Load a font for UI text
-   if(!font.loadFromFile("arial.ttf")) {
-    std::cerr << "Error loading font." << std::endl; // FIX: Use std::endl, not std::exit(1) inside the stream
-    std::exit(1); // Call exit separately
 }
+
+void SolverWindow::setupButtons() {
+    // Start Button (Green)
+    startButton = createButton(800, 100, 150, 45, sf::Color(76, 175, 80));
+    startButtonText = createText("START", 16, sf::Color::White, 850, 113);
+    
+    // Pause Button (Yellow)
+    pauseButton = createButton(970, 100, 150, 45, sf::Color(255, 193, 7));
+    pauseButtonText = createText("PAUSE", 16, sf::Color::White, 1020, 113);
+    
+    // Reset Button (Red)
+    resetButton = createButton(800, 160, 320, 45, sf::Color(244, 67, 54));
+    resetButtonText = createText("RESET", 16, sf::Color::White, 950, 173);
+    
+    // Add City Button (Blue)
+    addCityButton = createButton(800, 240, 320, 40, sf::Color(33, 150, 243));
+    addCityButtonText = createText("ADD CITY (Click Canvas)", 14, sf::Color::White, 850, 252);
+    
+    // Remove City Button (Orange)
+    removeCityButton = createButton(800, 290, 320, 40, sf::Color(255, 87, 34));
+    removeCityButtonText = createText("REMOVE LAST CITY", 14, sf::Color::White, 870, 302);
+}
+
+sf::RectangleShape SolverWindow::createButton(float x, float y, float width, float height, const sf::Color& color) {
+    sf::RectangleShape button(sf::Vector2f(width, height));
+    // SFML 3.x FIX: setPosition now requires a single sf::Vector2f argument
+    button.setPosition(sf::Vector2f(x, y));
+    button.setFillColor(color);
+    button.setOutlineThickness(2);
+    button.setOutlineColor(sf::Color(0, 0, 0, 50));
+    return button;
+}
+
+sf::Text SolverWindow::createText(const std::string& str, unsigned int size, const sf::Color& color, float x, float y) {
+    // SFML 3.x FIX: sf::Text requires a font argument in its constructor (done via the member initialization)
+    sf::Text text(font); 
+    
+    text.setString(str);
+    text.setCharacterSize(size);
+    text.setFillColor(color);
+    // SFML 3.x FIX: setPosition now requires a single sf::Vector2f argument
+    text.setPosition(sf::Vector2f(x, y));
+    return text;
 }
 
 void SolverWindow::initializeCities() {
-    // Cities matching your 'testLargerProblem' for better visualization
-    cityData.push_back(City("City_A", 60, 200));
-    cityData.push_back(City("City_B", 180, 200));
-    cityData.push_back(City("City_C", 80, 180));
-    cityData.push_back(City("City_D", 140, 180));
-    cityData.push_back(City("City_E", 20, 160));
-    cityData.push_back(City("City_F", 100, 160));
-    cityData.push_back(City("City_G", 200, 160));
-    cityData.push_back(City("City_H", 140, 140));
-    cityData.push_back(City("City_I", 40, 120));
-    cityData.push_back(City("City_J", 100, 120));
+    cityData.clear();
+    cityData.push_back(City("A", 80, 150));
+    cityData.push_back(City("B", 220, 140));
+    cityData.push_back(City("C", 100, 200));
+    cityData.push_back(City("D", 180, 220));
+    cityData.push_back(City("E", 50, 260));
+    cityData.push_back(City("F", 140, 280));
+    cityData.push_back(City("G", 250, 250));
+    cityData.push_back(City("H", 200, 180));
+    cityData.push_back(City("I", 70, 320));
+    cityData.push_back(City("J", 160, 340));
 }
 
 void SolverWindow::resetSimulation() {
-    // Reset SA state
-    solver.reset(10000.0, 0.995, 100); 
+    solver.reset(10000.0, 0.995, 100);
     
-    // Initialize Tours
-    currentTour = Tour(cityData);
-    currentTour.generateRandomTour();
-    bestTour = currentTour.createCopy();
+    if (cityData.size() >= 2) {
+        currentTour = Tour(cityData);
+        currentTour.generateRandomTour();
+        bestTour = currentTour.createCopy();
+    } else {
+        currentTour = Tour();
+        bestTour = Tour();
+    }
     
     isRunning = false;
+    isPaused = false;
+    iterationCount = 0;
+    updateButtonStates();
+}
+
+void SolverWindow::updateButtonStates() {
+    // Update button colors based on state
+    if (!isRunning) {
+        startButton.setFillColor(sf::Color(76, 175, 80)); // Green
+        pauseButton.setFillColor(sf::Color(150, 150, 150)); // Grey (disabled)
+    } else {
+        startButton.setFillColor(sf::Color(150, 150, 150)); // Grey (disabled)
+        if (isPaused) {
+            pauseButton.setFillColor(sf::Color(76, 175, 80)); // Green (resume)
+            pauseButtonText.setString("RESUME");
+        } else {
+            pauseButton.setFillColor(sf::Color(255, 193, 7)); // Yellow (pause)
+            pauseButtonText.setString("PAUSE");
+        }
+    }
+    
+    // Update add city button based on mode
+    if (isAddingCity) {
+        addCityButton.setFillColor(sf::Color(244, 67, 54)); // Red when active
+        addCityButtonText.setString("CANCEL ADDING");
+    } else {
+        addCityButton.setFillColor(sf::Color(33, 150, 243)); // Blue
+        addCityButtonText.setString("ADD CITY (Click Canvas)");
+    }
+}
+
+bool SolverWindow::isMouseOverButton(const sf::RectangleShape& button, const sf::Vector2i& mousePos) {
+    sf::FloatRect bounds = button.getGlobalBounds();
+    // SFML 3.x FIX: contains now requires a single sf::Vector2f argument
+    return bounds.contains(sf::Vector2f(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)));
+}
+
+void SolverWindow::handleButtonClick(const sf::Vector2i& mousePos) {
+    if (isMouseOverButton(startButton, mousePos) && !isRunning) {
+        if (cityData.size() < 2) {
+            std::cout << "Add at least 2 cities before starting!" << std::endl;
+            return;
+        }
+        isRunning = true;
+        isPaused = false;
+        updateButtonStates();
+    }
+    else if (isMouseOverButton(pauseButton, mousePos) && isRunning) {
+        isPaused = !isPaused;
+        updateButtonStates();
+    }
+    else if (isMouseOverButton(resetButton, mousePos)) {
+        resetSimulation();
+    }
+    else if (isMouseOverButton(addCityButton, mousePos) && !isRunning) {
+        isAddingCity = !isAddingCity;
+        updateButtonStates();
+    }
+    else if (isMouseOverButton(removeCityButton, mousePos) && !isRunning && !cityData.empty()) {
+        cityData.pop_back();
+        resetSimulation();
+    }
+}
+
+void SolverWindow::handleCanvasClick(const sf::Vector2i& mousePos) {
+    if (!isAddingCity || isRunning) return;
+    
+    // Check if click is within canvas bounds
+    if (mousePos.x < OFFSET_X || mousePos.x > CANVAS_WIDTH || 
+        mousePos.y < OFFSET_Y || mousePos.y > CANVAS_HEIGHT) {
+        return;
+    }
+    
+    // Convert screen coordinates to city coordinates
+    double cityX = (mousePos.x - OFFSET_X) / VISUAL_SCALE;
+    double cityY = (mousePos.y - OFFSET_Y) / VISUAL_SCALE;
+    
+    // Create new city
+    std::string cityName = std::string(1, 'A' + static_cast<char>(cityData.size()));
+    cityData.push_back(City(cityName, cityX, cityY));
+    
+    resetSimulation();
+    isAddingCity = false;
+    updateButtonStates();
 }
 
 void SolverWindow::processEvents() {
-    sf::Event event;
-    while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed)
-            window.close();
+    // SFML 3.x FIX: pollEvent no longer takes an argument and returns std::optional<sf::Event>
+    while (auto eventOpt = window.pollEvent()) {
         
-        if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::Space) {
-                isRunning = !isRunning; // Start/Pause with SPACE
-            } else if (event.key.code == sf::Keyboard::R) {
-                resetSimulation(); // Reset with R
+        // 1. Handle Closed Event (if the optional contains a value)
+        if (eventOpt->is<sf::Event::Closed>()) { 
+            window.close();
+        }
+        
+        // 2. Handle Mouse Button Press
+        else if (eventOpt->is<sf::Event::MouseButtonPressed>()) {
+            // SFML 3.x FIX: Use getIf<T>() and dereference the pointer 
+            const auto& mouseEvent = *eventOpt->getIf<sf::Event::MouseButtonPressed>();
+            
+            // SFML 3.x FIX: Mouse position is accessed via the 'position' member.
+            if (mouseEvent.button == sf::Mouse::Button::Left) {
+                // Use position data from the event struct
+                // OLD: sf::Vector2i mousePos(mouseEvent.x, mouseEvent.y);
+                sf::Vector2i mousePos = mouseEvent.position; 
+                
+                // Check if click is in control panel area
+                if (mousePos.x > CANVAS_WIDTH) {
+                    handleButtonClick(mousePos);
+                } else {
+                    handleCanvasClick(mousePos);
+                }
+            }
+        }
+        
+        // 3. Handle Key Press
+        else if (eventOpt->is<sf::Event::KeyPressed>()) {
+            // SFML 3.x FIX: Use getIf<T>() and dereference the pointer
+            const auto& keyEvent = *eventOpt->getIf<sf::Event::KeyPressed>();
+            
+            // SFML 3.x FIX: Key code is accessed directly via the 'code' member, not 'key.code'.
+            if (keyEvent.code == sf::Keyboard::Key::Space && cityData.size() >= 2) { 
+                if (!isRunning) {
+                    isRunning = true;
+                    isPaused = false;
+                } else {
+                    isPaused = !isPaused;
+                }
+                updateButtonStates();
+            }
+            // SFML 3.x FIX: Key code is accessed directly via the 'code' member, not 'key.code'.
+            else if (keyEvent.code == sf::Keyboard::Key::R) {
+                resetSimulation();
             }
         }
     }
 }
 
-void SolverWindow::update(float deltaTime) {
-    // Run the simulation only if the temperature is high enough and the simulation is active
-    if (isRunning && solver.getCurrentTemperature() > 0.1) {
+void SolverWindow::runAlgorithmStep() {
+    const int ITERS_PER_FRAME = 10;
+    for (int i = 0; i < ITERS_PER_FRAME; ++i) {
+        solver.runOneIteration(currentTour);
+        iterationCount++;
         
-        // Run a batch of iterations to speed up convergence
-        const int ITERS_PER_FRAME = 10; 
-        for (int i = 0; i < ITERS_PER_FRAME; ++i) {
-            
-            // 1. Run one SA iteration, mutating currentTour
-            solver.runOneIteration(currentTour);
-
-            // 2. Check and update the overall best tour
-            if (currentTour.getTotalDistance() < bestTour.getTotalDistance()) {
-                bestTour = currentTour.createCopy();
-            }
+        if (currentTour.getTotalDistance() < bestTour.getTotalDistance()) {
+            bestTour = currentTour.createCopy();
         }
+    }
+    
+    solver.coolTemperature();
+    
+    if (solver.getCurrentTemperature() <= 0.1) {
+        isRunning = false;
+        updateButtonStates();
+    }
+}
+
+void SolverWindow::update(float deltaTime) {
+    if (isRunning && !isPaused && solver.getCurrentTemperature() > 0.1) {
+        runAlgorithmStep();
+    }
+}
+
+void SolverWindow::drawCanvas() {
+    // Draw canvas background
+    sf::RectangleShape canvas(sf::Vector2f(CANVAS_WIDTH, CANVAS_HEIGHT));
+    // SFML 3.x FIX: setPosition now requires a single sf::Vector2f argument
+    canvas.setPosition(sf::Vector2f(0, 0));
+    canvas.setFillColor(sf::Color::White);
+    canvas.setOutlineThickness(3);
+    canvas.setOutlineColor(sf::Color(200, 200, 200));
+    window.draw(canvas);
+    
+    // Draw title on canvas
+    sf::Text title = createText("TSP - Simulated Annealing", 24, sf::Color(50, 50, 50), 20, 10);
+    title.setStyle(sf::Text::Bold);
+    window.draw(title);
+    
+    // Draw instruction if adding city
+    if (isAddingCity) {
+        sf::RectangleShape instructionBox(sf::Vector2f(280, 40));
+        // SFML 3.x FIX: setPosition now requires a single sf::Vector2f argument
+        instructionBox.setPosition(sf::Vector2f(CANVAS_WIDTH / 2 - 140, 50));
+        instructionBox.setFillColor(sf::Color(33, 150, 243, 220));
+        instructionBox.setOutlineThickness(2);
+        instructionBox.setOutlineColor(sf::Color::White);
+        window.draw(instructionBox);
         
-        // 3. Cool the system (This happens once every 'iterationsPerTemp' iterations)
-        solver.coolTemperature();
-        
-    } else if (solver.getCurrentTemperature() <= 0.1) {
-        isRunning = false; // Stop when optimization is complete
+        sf::Text instruction = createText("Click on canvas to add city", 14, sf::Color::White, CANVAS_WIDTH / 2 - 110, 60);
+        instruction.setStyle(sf::Text::Bold);
+        window.draw(instruction);
     }
 }
 
@@ -88,125 +311,221 @@ void SolverWindow::drawTour(const Tour& tour, const sf::Color& color, float thic
     const auto& path = tour.getTour();
     if (path.size() < 2) return;
     
-    // Define a 2D viewport for the cities (e.g., coordinates 0-300 in the top-left area)
-    const float VISUAL_SCALE = 2.0f;
-    const float OFFSET_X = 50.0f;
-    const float OFFSET_Y = 50.0f;
-
-    // Draw lines
+    // Draw lines between cities
     for (size_t i = 0; i < path.size(); ++i) {
         const City& current = path[i];
         const City& next = path[(i + 1) % path.size()];
-
-        sf::Vertex line[] = {
-            sf::Vertex(sf::Vector2f(current.getX() * VISUAL_SCALE + OFFSET_X, current.getY() * VISUAL_SCALE + OFFSET_Y), color),
-            sf::Vertex(sf::Vector2f(next.getX() * VISUAL_SCALE + OFFSET_X, next.getY() * VISUAL_SCALE + OFFSET_Y), color)
-        };
-        // Use a rectangle shape for thickness
-        sf::Vector2f start(line[0].position);
-        sf::Vector2f end(line[1].position);
-
+        
+        sf::Vector2f start(current.getX() * VISUAL_SCALE + OFFSET_X, current.getY() * VISUAL_SCALE + OFFSET_Y);
+        sf::Vector2f end(next.getX() * VISUAL_SCALE + OFFSET_X, next.getY() * VISUAL_SCALE + OFFSET_Y);
+        
         sf::Vector2f direction = end - start;
         float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
         float angle = std::atan2(direction.y, direction.x) * 180.0f / 3.14159f;
-
-        sf::RectangleShape lineShape(sf::Vector2f(length, thickness));
-        lineShape.setFillColor(color);
-        lineShape.setPosition(start);
-        lineShape.setRotation(angle);
         
-        window.draw(lineShape);
+        sf::RectangleShape line(sf::Vector2f(length, thickness));
+        line.setFillColor(color);
+        line.setPosition(start);
+        // SFML 3.x FIX: setRotation now requires sf::Angle (or sf::degrees())
+        line.setRotation(sf::degrees(angle)); 
+        
+        window.draw(line);
     }
-    
-    // Draw cities as circles
-    for (const auto& city : path) {
-        sf::CircleShape circle(5.0f);
-        circle.setFillColor(sf::Color::Blue);
+}
+
+void SolverWindow::drawCities() {
+    for (const auto& city : cityData) {
+        float x = city.getX() * VISUAL_SCALE + OFFSET_X;
+        float y = city.getY() * VISUAL_SCALE + OFFSET_Y;
         
-        float x_pos = city.getX() * VISUAL_SCALE + OFFSET_X;
-        float y_pos = city.getY() * VISUAL_SCALE + OFFSET_Y;
+        // Draw city circle with glow effect
+        sf::CircleShape glow(10.0f);
+        glow.setFillColor(sf::Color(33, 150, 243, 100));
+        // SFML 3.x FIX: setPosition now requires a single sf::Vector2f argument
+        glow.setPosition(sf::Vector2f(x - 10, y - 10));
+        window.draw(glow);
         
-        // Position is top-left corner of the circle bounds
-        circle.setPosition(x_pos - 5, y_pos - 5); 
+        sf::CircleShape circle(7.0f);
+        circle.setFillColor(sf::Color(33, 150, 243));
+        circle.setOutlineThickness(2);
+        circle.setOutlineColor(sf::Color::White);
+        // SFML 3.x FIX: setPosition now requires a single sf::Vector2f argument
+        circle.setPosition(sf::Vector2f(x - 7, y - 7));
         window.draw(circle);
         
         // Draw city name
-        sf::Text nameText;
-        nameText.setFont(font);
-        nameText.setString(city.getName());
-        nameText.setCharacterSize(12);
-        nameText.setFillColor(sf::Color::Black);
-        nameText.setPosition(x_pos + 5, y_pos - 10);
+        sf::Text nameText = createText(city.getName(), 13, sf::Color(20, 20, 20), x + 10, y - 8);
+        nameText.setStyle(sf::Text::Bold);
         window.draw(nameText);
     }
 }
 
-void SolverWindow::drawControls(const sf::Text& statusText, const sf::Text& distanceText, const sf::Text& tempText) {
-    // Draw all text elements to the right of the visualization area
-    window.draw(statusText);
-    window.draw(distanceText);
-    window.draw(tempText);
+void SolverWindow::drawControlPanel() {
+    // Draw panel background
+    sf::RectangleShape panel(sf::Vector2f(PANEL_WIDTH, WINDOW_HEIGHT));
+    // SFML 3.x FIX: setPosition now requires a single sf::Vector2f argument
+    panel.setPosition(sf::Vector2f(CANVAS_WIDTH, 0));
+    panel.setFillColor(sf::Color(240, 240, 240));
+    window.draw(panel);
     
-    // Draw instructions
-    sf::Text instructions;
-    instructions.setFont(font);
-    instructions.setCharacterSize(14);
-    instructions.setFillColor(sf::Color::Black);
-    instructions.setString("Controls:\nSPACE: Start/Pause\nR: Reset Simulation");
-    instructions.setPosition(650, 400);
-    window.draw(instructions);
+    // Draw panel title
+    sf::Text panelTitle = createText("Control Panel", 20, sf::Color(50, 50, 50), 820, 50);
+    panelTitle.setStyle(sf::Text::Bold);
+    window.draw(panelTitle);
+    
+    // Draw section separator
+    sf::RectangleShape separator(sf::Vector2f(320, 2));
+    // SFML 3.x FIX: setPosition now requires a single sf::Vector2f argument
+    separator.setPosition(sf::Vector2f(800, 85));
+    separator.setFillColor(sf::Color(200, 200, 200));
+    window.draw(separator);
+}
+
+void SolverWindow::drawButton(const sf::RectangleShape& button, const sf::Text& text) {
+    window.draw(button);
+    window.draw(text);
+}
+
+void SolverWindow::drawStatistics() {
+    float startY = 360;
+    float lineHeight = 70;
+    
+    // Statistics section title
+    sf::Text statsTitle = createText("Algorithm Statistics", 18, sf::Color(50, 50, 50), 820, 350);
+    statsTitle.setStyle(sf::Text::Bold);
+    window.draw(statsTitle);
+    
+    // Status
+    sf::RectangleShape statusBox(sf::Vector2f(320, 55));
+    // SFML 3.x FIX: setPosition now requires a single sf::Vector2f argument
+    statusBox.setPosition(sf::Vector2f(800, startY));
+    statusBox.setFillColor(sf::Color::White);
+    statusBox.setOutlineThickness(2);
+    statusBox.setOutlineColor(sf::Color(200, 200, 200));
+    window.draw(statusBox);
+    
+    sf::Text statusLabel = createText("Status:", 12, sf::Color(100, 100, 100), 810, startY + 8);
+    window.draw(statusLabel);
+    
+    std::string statusStr;
+    sf::Color statusColor;
+    if (solver.getCurrentTemperature() <= 0.1) {
+        statusStr = "FINISHED";
+        statusColor = sf::Color(76, 175, 80);
+    } else if (isRunning && !isPaused) {
+        statusStr = "RUNNING";
+        statusColor = sf::Color(76, 175, 80);
+    } else if (isPaused) {
+        statusStr = "PAUSED";
+        statusColor = sf::Color(255, 193, 7);
+    } else {
+        statusStr = "READY";
+        statusColor = sf::Color(100, 100, 100);
+    }
+    sf::Text statusValue = createText(statusStr, 18, statusColor, 810, startY + 28);
+    statusValue.setStyle(sf::Text::Bold);
+    window.draw(statusValue);
+    
+    // Best Distance
+    startY += lineHeight;
+    sf::RectangleShape distBox(sf::Vector2f(320, 55));
+    // SFML 3.x FIX: setPosition now requires a single sf::Vector2f argument
+    distBox.setPosition(sf::Vector2f(800, startY));
+    distBox.setFillColor(sf::Color::White);
+    distBox.setOutlineThickness(2);
+    distBox.setOutlineColor(sf::Color(200, 200, 200));
+    window.draw(distBox);
+    
+    sf::Text distLabel = createText("Best Distance:", 12, sf::Color(100, 100, 100), 810, startY + 8);
+    window.draw(distLabel);
+    
+    std::ostringstream distStream;
+    distStream << std::fixed << std::setprecision(2) << bestTour.getTotalDistance();
+    sf::Text distValue = createText(distStream.str(), 20, sf::Color(76, 175, 80), 810, startY + 26);
+    distValue.setStyle(sf::Text::Bold);
+    window.draw(distValue);
+    
+    // Temperature
+    startY += lineHeight;
+    sf::RectangleShape tempBox(sf::Vector2f(320, 55));
+    // SFML 3.x FIX: setPosition now requires a single sf::Vector2f argument
+    tempBox.setPosition(sf::Vector2f(800, startY));
+    tempBox.setFillColor(sf::Color::White);
+    tempBox.setOutlineThickness(2);
+    tempBox.setOutlineColor(sf::Color(200, 200, 200));
+    window.draw(tempBox);
+    
+    sf::Text tempLabel = createText("Temperature:", 12, sf::Color(100, 100, 100), 810, startY + 8);
+    window.draw(tempLabel);
+    
+    std::ostringstream tempStream;
+    tempStream << std::fixed << std::setprecision(2) << solver.getCurrentTemperature() << " °";
+    sf::Text tempValue = createText(tempStream.str(), 18, sf::Color(255, 87, 34), 810, startY + 28);
+    tempValue.setStyle(sf::Text::Bold);
+    window.draw(tempValue);
+    
+    // Iterations
+    startY += lineHeight;
+    sf::RectangleShape iterBox(sf::Vector2f(320, 55));
+    // SFML 3.x FIX: setPosition now requires a single sf::Vector2f argument
+    iterBox.setPosition(sf::Vector2f(800, startY));
+    iterBox.setFillColor(sf::Color::White);
+    iterBox.setOutlineThickness(2);
+    iterBox.setOutlineColor(sf::Color(200, 200, 200));
+    window.draw(iterBox);
+    
+    sf::Text iterLabel = createText("Iterations:", 12, sf::Color(100, 100, 100), 810, startY + 8);
+    window.draw(iterLabel);
+    
+    sf::Text iterValue = createText(std::to_string(iterationCount), 18, sf::Color(33, 150, 243), 810, startY + 28);
+    iterValue.setStyle(sf::Text::Bold);
+    window.draw(iterValue);
+    
+    // City Count
+    startY += lineHeight;
+    sf::RectangleShape cityBox(sf::Vector2f(320, 55));
+    // SFML 3.x FIX: setPosition now requires a single sf::Vector2f argument
+    cityBox.setPosition(sf::Vector2f(800, startY));
+    cityBox.setFillColor(sf::Color::White);
+    cityBox.setOutlineThickness(2);
+    cityBox.setOutlineColor(sf::Color(200, 200, 200));
+    window.draw(cityBox);
+    
+    sf::Text cityLabel = createText("Cities:", 12, sf::Color(100, 100, 100), 810, startY + 8);
+    window.draw(cityLabel);
+    
+    sf::Text cityValue = createText(std::to_string(cityData.size()), 18, sf::Color(156, 39, 176), 810, startY + 28);
+    cityValue.setStyle(sf::Text::Bold);
+    window.draw(cityValue);
 }
 
 void SolverWindow::draw() {
-    window.clear(sf::Color(240, 240, 240)); // Light grey background
-
-    // 1. Draw the current best tour (Red lines)
-    drawTour(bestTour, sf::Color::Red, 2.0f);
+    window.clear(sf::Color(245, 245, 245));
     
-    // 2. Prepare UI Text
-    std::stringstream ss;
+    // Draw canvas and tour
+    drawCanvas();
+    drawTour(bestTour, sf::Color(76, 175, 80), 3.0f);
+    drawCities();
     
-    sf::Text statusText;
-    statusText.setFont(font);
-    statusText.setCharacterSize(18);
-    statusText.setFillColor(sf::Color::Black);
-    statusText.setPosition(650, 50);
+    // Draw control panel
+    drawControlPanel();
+    drawButton(startButton, startButtonText);
+    drawButton(pauseButton, pauseButtonText);
+    drawButton(resetButton, resetButtonText);
+    drawButton(addCityButton, addCityButtonText);
+    drawButton(removeCityButton, removeCityButtonText);
+    drawStatistics();
     
-    if (solver.getCurrentTemperature() <= 0.1) {
-        statusText.setString("Status: FINISHED");
-    } else {
-        statusText.setString(isRunning ? "Status: RUNNING (SPACE to PAUSE)" : "Status: PAUSED (SPACE to START)");
-    }
-
-    sf::Text distanceText = statusText;
-    ss.precision(2);
-    ss << std::fixed << "Best Distance: " << bestTour.getTotalDistance();
-    distanceText.setString(ss.str());
-    distanceText.setPosition(650, 100);
-    
-    ss.str(""); 
-    ss.clear();
-    
-    sf::Text tempText = statusText;
-    ss.precision(4);
-    ss << "Temp: " << solver.getCurrentTemperature();
-    tempText.setString(ss.str());
-    tempText.setPosition(650, 150);
-
-    // 3. Draw UI
-    drawControls(statusText, distanceText, tempText);
-
     window.display();
 }
 
 void SolverWindow::run() {
+    sf::Clock clock;
     while (window.isOpen()) {
+        float deltaTime = clock.restart().asSeconds();
+        
         processEvents();
-        
-        // Time management is handled implicitly by the 60 FPS limit
-        // We only pass 0 as deltaTime since we run fixed number of steps per frame
-        update(0); 
-        
+        update(deltaTime);
         draw();
     }
 }
